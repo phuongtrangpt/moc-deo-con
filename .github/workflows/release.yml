@@ -1,0 +1,40 @@
+name: Build and release
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - name: Check release version
+        run: |
+          node --input-type=module -e "import {VERSION} from './lib/version.ts'; if(process.env.GITHUB_REF_TYPE === 'tag' && process.env.GITHUB_REF_NAME !== 'v'+VERSION) throw Error('Tag does not match VERSION');"
+      - run: npm run build
+      - run: npm test
+      - run: npm run release:bundle
+      - name: Package Windows and Pi
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile, ZIP_DEFLATED
+          import json
+          root = next(Path('outputs').glob('Moc_Deo_Con_v*'))
+          version = json.loads((root/'version.json').read_text())['version']
+          with ZipFile(f'outputs/Moc_Deo_Con_v{version}_Windows_Pi.zip','w',ZIP_DEFLATED) as z:
+              for p in root.rglob('*'):
+                  if p.is_file(): z.write(p, Path(root.name)/p.relative_to(root))
+          PY
+      - name: Publish tagged release
+        if: github.ref_type == 'tag'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" outputs/Moc_Deo_Con_v*_Windows_Pi.zip outputs/moc-deo-con-update.json --verify-tag --title "Mốc Đèo Cón $GITHUB_REF_NAME" --notes-file local/release-notes.md

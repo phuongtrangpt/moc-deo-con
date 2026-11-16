@@ -1,0 +1,9 @@
+node_modules/
+outputs/
+data/
+.versions/
+active.json
+active.json.tmp
+.env*
+*.sqlite*
+*.log

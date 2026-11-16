@@ -1,0 +1,94 @@
+MỐC ĐÈO CÓN — SỔ QUÁN v0.2.0
+
+1. CHẠY TRÊN WINDOWS
+- Cài Node.js 24 từ https://nodejs.org (chỉ cần làm một lần).
+- Giải nén toàn bộ gói vào thư mục cố định, ví dụ D:\MocDeoCon.
+- Chạy CHAY_WINDOWS.bat. Giữ cửa sổ đang mở trong lúc bán hàng.
+- Trên máy chủ, vào http://localhost:8099.
+- Lần đầu đặt mật khẩu chủ quán (tối thiểu 8 ký tự); tên đăng nhập admin.
+- Chọn Quản trị → thêm món, topping, điền tài khoản MB và tên chủ tài khoản.
+- Tạo tài khoản cho từng người tại Quản trị → Tài khoản.
+- Điện thoại/tablet cùng mạng Wi-Fi: mở địa chỉ IP được in trong cửa sổ chạy.
+- Nếu Windows hỏi tường lửa, chỉ cho phép trên mạng riêng của quán.
+- Nếu không vào được từ điện thoại: kiểm tra mạng khách có cách ly thiết bị hay không,
+  và quyền truy cập TCP 8099 trên máy chủ.
+- Không tắt hoặc cho máy chủ ngủ khi đang bán hàng.
+- Các thiết bị cập nhật khoảng 6 giây/lần. Thiết bị mất kết nối không thể lưu đơn.
+
+2. DÙNG HẰNG NGÀY
+- Bán hàng: Tại quầy/Mang đi → chọn khách → món/topping → lưu đơn chờ hoặc thanh toán.
+- Giá riêng: chọn khách, sửa giá và chọn Lưu giá cho khách nếu muốn dùng lần sau.
+- Nợ lại: bill trả một phần hoặc chưa trả phải có khách hàng cụ thể.
+- Thu nợ: Khách & công nợ → Xem sổ khách → Thu nợ; mặc định trừ bill cũ trước.
+- Thu chi: Ghi thu chi → loại khoản, ngày, số tiền, nhóm và nguồn tiền.
+- Báo cáo: hôm nay/tuần/tháng/tùy chọn. CSV mở bằng Excel.
+- Đơn hoàn tất không sửa/hủy trong bản này, để giữ sổ tiền nhất quán.
+- Chốt ngày lưu bản đối chiếu tại thời điểm chốt; giao dịch mới sau chốt không sửa số cũ.
+
+3. IN BILL XPRINTER XP-58IIH USB
+- Cắm máy vào Windows, cài driver đúng mẫu và thử in từ Windows trước.
+- Trong phần mềm trên Windows: mở bill → In bill 58 mm.
+- Chọn đúng máy in; giấy 58 mm, tỉ lệ 100%, tắt đầu trang/chân trang.
+- QR cần Internet để tải hình từ VietQR. Chờ hình tải xong trước khi in.
+- Chưa nhập tài khoản MB thì bill không có QR.
+- Tiền chuyển khoản cần người bán kiểm tra trước khi xác nhận đã nhận.
+- In trên điện thoại không tự gửi tới máy in USB ở Windows. Chương trình in trực tiếp
+  từ điện thoại/Pi cần được tích hợp và kiểm tra riêng với máy in thật.
+- Chưa xác minh chất lượng in thực tế; thử bill có QR trên máy của quán trước khi dùng.
+
+4. DỮ LIỆU VÀ SAO LƯU
+- Dữ liệu nằm trong thư mục data cạnh server.mjs; không xóa hoặc ghi đè thư mục này.
+- Bản chạy local tự lưu một ảnh SQLite mỗi ngày tại data/backups (khi máy chủ đang chạy).
+  Đây là bản tại lần chạy/kiểm tra đầu tiên trong ngày, không phải mọi giao dịch trong ngày.
+- Cuối ngày: dừng phần mềm bằng Ctrl+C, sao chép toàn bộ thư mục data sang USB/ổ khác,
+  rồi chạy lại nếu cần. Đây là cách sao lưu đầy đủ, gồm tài khoản và sổ tiền.
+- Khôi phục: dừng server, giữ một bản sao data hiện tại, chép lại thư mục data đã sao lưu,
+  rồi chạy lại. Khôi phục bản sao đồng nghĩa quay về dữ liệu tại thời điểm sao lưu.
+- Có thể dùng riêng tệp data/backups/moc-deo-con-YYYY-MM-DD.sqlite bằng cách:
+  dừng server → sao lưu toàn bộ data hiện tại ra ngoài → trong data chỉ để bản SQLite
+  cần khôi phục với tên moc-deo-con.sqlite → chạy lại (tránh giữ WAL/SHM của bản cũ).
+- JSON trong quản trị là bản xuất dữ liệu nghiệp vụ để đối chiếu, không phải bản sao
+  đầy đủ tài khoản và chưa có nút nhập lại JSON trong giao diện.
+- Gói phát hành không chứa mật khẩu mặc định, khách hoặc doanh thu mẫu.
+
+5. CHẠY TRÊN PI / LINUX
+- Cần hệ điều hành 64-bit và Node.js 24 phù hợp máy.
+- Trong thư mục gói: node bootstrap.mjs
+- Hoặc dùng Docker:
+  docker build -t moc-deo-con .
+  docker run -d --name moc-deo-con --restart unless-stopped -p 8099:8099 -v moc-deo-con-data:/data moc-deo-con
+- Không cần npm install cho gói đã đóng gói này.
+- Chưa thử trên Pi 3 thật. Hãy thử trước khi dùng làm máy chủ chính.
+- Máy in USB vẫn cần cài đặt/hệ thống in phù hợp; Docker này không tự cấp quyền USB.
+
+6. PHẠM VI BẢN 0.1
+Có bán hàng, topping, giá khách quen, đơn chờ, thanh toán kết hợp, công nợ,
+thu nợ một phần, thu chi, báo cáo, CSV, bill 58 mm, QR MB, tài khoản và nhật ký.
+Chưa có kho/giá vốn, tự đối soát ngân hàng, hoàn tiền, ảnh hóa đơn hoặc in USB tự động.
+Chênh lệch thu chi không phải lợi nhuận theo giá vốn.
+Bản local dùng HTTP trong LAN tin cậy. Không chuyển tiếp cổng ra Internet trực tiếp;
+muốn truy cập từ xa cần triển khai HTTPS/VPN phù hợp.
+
+CẬP NHẬT v0.2.0 — BÀN ĂN VÀ GIAO DIỆN ĐIỆN THOẠI
+- Màn hình đầu là Bàn ăn. Có sẵn 10 bàn, đổi tên/thêm/ẩn tại Quản trị → Bàn ăn.
+- Chạm bàn trống để lên đơn; bàn đang phục vụ để gọi thêm món vào đơn cũ.
+- Lưu đơn chờ để thiết bị khác nhìn thấy. Thanh toán xong bàn tự trở về trống.
+- Chuyển/gộp: Đơn hàng → Chi tiết → Chuyển / gộp bàn. Đơn gộp cần cùng khách hàng.
+- Điện thoại đã ẩn thanh điều hướng cố định. Nút ☰ mở menu; Bàn/Món chuyển màn hình.
+- Thanh dưới chỉ hiện tổng đơn khi chọn món; chạm để mở giỏ và thanh toán.
+- Màn hình thanh toán có bàn phím số 0–9, 000, xóa, nút mệnh giá và Trả đủ.
+- Tạo tài khoản nhân viên: ☰ → Quản trị → Tài khoản (đăng nhập admin).
+
+NÂNG CẤP TỪ v0.1
+- Lần này cần tải gói v0.2.0 một lần vì v0.1 chưa có bộ cập nhật.
+- Dừng chương trình cũ, sao lưu toàn bộ thư mục data ra chỗ khác.
+- Chép tệp chương trình v0.2.0 vào thư mục đang sử dụng, GIỮ NGUYÊN data.
+- Chạy CHAY_WINDOWS.bat mới. Không cần tạo lại tài khoản hoặc nhập lại món.
+- Từ v0.2.0: Quản trị → Cập nhật → Kiểm tra bản mới → Cập nhật.
+- Xử lý hết đơn đang mở trước khi cài. Có tiến trình tải, kiểm tra SHA-256 và sao lưu.
+- Chương trình tự khởi động lại; nếu bản mới không khởi động được sẽ quay về bản cũ.
+- Các máy truy cập vẫn dùng cùng địa chỉ; tải lại giao diện sau khi máy chủ cập nhật.
+- Không xóa active.json, .versions hoặc data khi đang sử dụng cơ chế cập nhật.
+- Nếu chạy Linux trực tiếp, dùng node bootstrap.mjs thay cho node server.mjs.
+- Docker cần lưu cả thư mục cài đặt có .versions/active.json bằng bind mount nếu muốn
+  giữ bản cập nhật khi tạo lại container; dữ liệu quán vẫn nằm ở volume /data.

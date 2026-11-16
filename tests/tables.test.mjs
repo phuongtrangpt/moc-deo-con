@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';import {initial,apply} from '../lib/domain.ts';import {pressPayment,updatePayment} from '../lib/payment.ts';
+const s=initial(),u={id:'a',name:'Admin',role:'admin'};const run=a=>apply(s,{id:crypto.randomUUID(),...a},u);
+run({type:'item',item:{id:'pho',name:'Phở',price:35000,category:'Món chính',active:true}});const order=(tableId,id)=>({id,tableId,type:'Tại quầy',lines:[{itemId:'pho',price:35000,qty:1,note:'',toppings:[]}]});
+for(let i=1;i<=3;i++)run({type:'order',order:order('table-'+i,'o'+i)});assert.equal(s.orders.filter(o=>o.status==='open').length,3);
+assert.throws(()=>run({type:'order',order:order('table-1','other')}),/Bàn đã có đơn/);
+assert.throws(()=>run({type:'table',table:{id:'table-1',name:'Bàn 1',active:false}}),/Bàn đang phục vụ/);
+run({type:'move',orderId:'o1',version:1,tableId:'table-4'});assert.equal(s.orders.find(o=>o.id==='o1').tableId,'table-4');assert.throws(()=>run({type:'move',orderId:'o1',version:1,tableId:'table-5'}));
+run({type:'merge',orderId:'o2',version:1,targetId:'o1',targetVersion:2});assert.equal(s.orders.find(o=>o.id==='o1').total,70000);assert.equal(s.orders.find(o=>o.id==='o2').status,'merged');assert.equal(s.orders.filter(o=>o.status==='open').length,2);
+const o=s.orders.find(o=>o.id==='o1');run({type:'checkout',orderId:o.id,version:o.version,cash:70000,bank:0});assert(!s.orders.some(o=>o.status==='open'&&o.tableId==='table-4'));
+let p={cash:'85000',bank:'0',received:'85000',field:'received',replace:true};p=pressPayment(p,'1',85000);p=pressPayment(p,'000',85000);p=pressPayment(p,'0',85000);p=pressPayment(p,'0',85000);assert.equal(p.received,'100000');assert.equal(p.cash,'85000');assert.equal(Number(p.received)-Number(p.cash),15000);
+p=updatePayment(p,'bank','35000',85000);assert.equal(p.cash,'50000');p=pressPayment({...p,replace:true},'2',85000);assert.equal(p.bank,'2');p=pressPayment(p,'clear',85000);assert.equal(p.bank,'0');
+console.log('PASS: three concurrent tables, duplicate table guards, hide occupied, move/version checks, merge, release on payment, keypad cash change and mixed payment');
