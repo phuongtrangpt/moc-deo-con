@@ -2,6 +2,12 @@
 
 Phần mềm bán hàng cho quán ăn gia đình, chạy trên một máy Windows hoặc Linux/Pi, điện thoại và tablet cùng truy cập bằng trình duyệt.
 
+## Mới trong v0.2.1
+
+- Đổi mật khẩu có xác nhận mật khẩu hiện tại; vô hiệu hóa phiên cũ trên các thiết bị khác.
+- Phân quyền theo từng nhân viên và kiểm tra ở máy chủ, lọc dữ liệu theo quyền.
+- Lưu đơn lớn cạnh Thanh toán trên điện thoại; cập nhật có phần trăm và số KB tải.
+
 ## Chức năng
 
 - Bàn ăn: trạng thái trống/đang phục vụ, gọi thêm món, chuyển/gộp bàn, đổi tên/thêm/ẩn bàn.

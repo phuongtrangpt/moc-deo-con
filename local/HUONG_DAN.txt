@@ -92,3 +92,13 @@ NÂNG CẤP TỪ v0.1
 - Nếu chạy Linux trực tiếp, dùng node bootstrap.mjs thay cho node server.mjs.
 - Docker cần lưu cả thư mục cài đặt có .versions/active.json bằng bind mount nếu muốn
   giữ bản cập nhật khi tạo lại container; dữ liệu quán vẫn nằm ở volume /data.
+
+CẬP NHẬT v0.2.1 — MẬT KHẨU, PHÂN QUYỀN VÀ LƯU ĐƠN
+- Quản trị → Đổi mật khẩu: nhập mật khẩu hiện tại, mật khẩu mới và xác nhận.
+- Đổi xong, các thiết bị khác đăng nhập lại bằng mật khẩu mới.
+- Quản trị → Tài khoản → Chỉnh sửa nhân viên: tích quyền theo công việc của từng người.
+- Mặc định có tạo đơn/thanh toán/khách hàng/chuyển bàn. Các quyền tài chính, nợ lại,
+  sửa giá, hủy đơn và quản lý thực đơn/bàn cần chủ quán bật riêng.
+- Khi cho phép Thu nợ, quyền Xem công nợ tự được bật.
+- Nút Lưu đơn đã được làm lớn, đặt cạnh Thanh toán và giữ ở vùng cuối giỏ trên điện thoại.
+- Cập nhật online hiển thị tiến trình, phần trăm và số KB đã tải nếu có.

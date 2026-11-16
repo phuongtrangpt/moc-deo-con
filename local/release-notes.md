@@ -1,19 +1,15 @@
-## Mốc Đèo Cón v0.2.0
+## Mốc Đèo Cón v0.2.1
 
-- Quản lý bàn ăn, 10 bàn mặc định; thêm, đổi tên và tạm ẩn trong quản trị.
-- Mở lại bàn để gọi thêm món; chuyển bàn, gộp đơn và giải phóng bàn khi thanh toán.
-- Điện thoại: ẩn thanh điều hướng cố định, menu thu gọn, ưu tiên bàn/món và giỏ hàng dạng màn hình riêng.
-- Bàn phím số thanh toán, 000, xóa, mệnh giá nhanh và tính tiền thừa/nợ lại.
-- Cập nhật online từ GitHub với tiến trình tải, kiểm tra SHA-256, sao lưu và tự khởi động lại.
-- Tự quay về bản cũ nếu bản mới không khởi động được.
-- Giữ dữ liệu và tài khoản của v0.1; không có tài khoản/món/doanh thu mẫu trong gói.
+- Đổi mật khẩu tại Quản trị → Đổi mật khẩu: xác nhận mật khẩu hiện tại, nhập lại mật khẩu mới; đăng xuất các phiên cũ trên thiết bị khác.
+- Phân quyền riêng từng nhân viên tại Quản trị → Tài khoản → Chỉnh sửa: tạo đơn, thanh toán, sửa giá, khách hàng, nợ lại, xem/thu công nợ, ghi/xem thu chi, báo cáo, hủy đơn, chuyển/gộp bàn và quản lý thực đơn/bàn.
+- Kiểm tra quyền ở máy chủ, lọc dữ liệu tài chính trước khi gửi xuống thiết bị. Quyền thay đổi có hiệu lực với phiên đang đăng nhập.
+- Nút Lưu đơn lớn, đặt cạnh Thanh toán; vùng thao tác giữ ở cuối giỏ hàng trên điện thoại.
+- Hiển thị phần trăm và dung lượng đã tải khi cập nhật, cùng trạng thái kiểm tra/cài đặt/khởi động lại.
 
-### Cập nhật từ v0.1
+### Cập nhật
 
-Tải ZIP này một lần. Dừng chương trình, sao lưu thư mục `data`, chép tệp chương trình mới vào chỗ cũ và giữ nguyên `data`. Chạy `CHAY_WINDOWS.bat` mới. Các lần sau: **Quản trị → Cập nhật → Kiểm tra bản mới**.
+Đang dùng v0.2.0: **Quản trị → Cập nhật → Kiểm tra bản mới → Cập nhật**. Xử lý hết đơn đang mở trước khi cài. Dữ liệu và tài khoản được giữ nguyên.
 
-### Chạy
+Đang dùng v0.1: tải ZIP một lần, dừng server, sao lưu `data`, chép tệp chương trình mới và giữ nguyên `data`. Chạy `CHAY_WINDOWS.bat` mới. Cần Node.js 24.
 
-Cài Node.js 24. Windows chạy `CHAY_WINDOWS.bat`; Linux/Pi chạy `node bootstrap.mjs`. Điện thoại cùng Wi-Fi dùng địa chỉ IP máy chủ và cổng 8099.
-
-Bill qua trình duyệt Windows kết nối USB. Chưa có in USB tự động từ điện thoại; máy in và Pi thật cần thử tại quán. Bản local dùng HTTP trong LAN; truy cập từ xa cần HTTPS/VPN.
+Mặc định nhân viên được tạo đơn, thanh toán, quản lý khách và chuyển/gộp bàn. Các quyền nhạy cảm cần chủ quán bật riêng. Quyền sửa giá cũ được chuyển sang từng tài khoản khi nâng cấp.
