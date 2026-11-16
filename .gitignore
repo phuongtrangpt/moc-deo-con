@@ -7,3 +7,5 @@ active.json.tmp
 .env*
 *.sqlite*
 *.log
+
+.sites-runtime/

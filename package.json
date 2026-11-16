@@ -1,6 +1,6 @@
 {
   "name": "moc-deo-con",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "private": true,
   "type": "module",
   "engines": {
@@ -9,7 +9,7 @@
   "scripts": {
     "build": "node local/build.mjs",
     "release:bundle": "node local/package-release.mjs",
-    "test": "node tests/domain.test.mjs && node tests/tables.test.mjs && node tests/local-api.test.mjs && node tests/updater.test.mjs && node tests/bootstrap.test.mjs && node tests/security.test.mjs"
+    "test": "node tests/domain.test.mjs && node tests/tables.test.mjs && node tests/local-api.test.mjs && node tests/updater.test.mjs && node tests/bootstrap.test.mjs && node tests/security.test.mjs && node tests/receipt.test.mjs && node tests/receipt-render.test.mjs"
   },
   "dependencies": {
     "react": "19.2.6",

@@ -102,3 +102,9 @@ CẬP NHẬT v0.2.1 — MẬT KHẨU, PHÂN QUYỀN VÀ LƯU ĐƠN
 - Khi cho phép Thu nợ, quyền Xem công nợ tự được bật.
 - Nút Lưu đơn đã được làm lớn, đặt cạnh Thanh toán và giữ ở vùng cuối giỏ trên điện thoại.
 - Cập nhật online hiển thị tiến trình, phần trăm và số KB đã tải nếu có.
+
+CẬP NHẬT v0.2.2 — QR TRÊN BILL
+- Có nút In bill / QR trước khi thanh toán. Quay lại sẽ giữ các số tiền đang nhập.
+- Bill đã trả đủ vẫn có QR tổng bill và nhãn ĐÃ THANH TOÁN / không chuyển tiền lại.
+- Bill còn nợ in QR theo phần còn thiếu.
+- Nút In chờ ảnh QR tải xong; khi lỗi mạng bấm Thử lại, tránh in thiếu mã.
